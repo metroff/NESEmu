@@ -1,13 +1,10 @@
-﻿
-
-namespace NESEmu
+﻿namespace NESEmu
 {
     class Program
     {
         static void Main(string[] args) {
-            CPU cpu = new CPU();
-
-            cpu.step();
+            Console console = new Console();
+            // console.run();
         }
     }
 }
