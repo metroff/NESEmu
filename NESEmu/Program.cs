@@ -3,7 +3,7 @@
     class Program
     {
         static void Main(string[] args) {
-            Console console = new Console();
+            Bus console = new Bus();
             // console.run();
         }
     }
