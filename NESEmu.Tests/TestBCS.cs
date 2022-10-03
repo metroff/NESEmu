@@ -4,7 +4,7 @@ public class TestBCS
 {
     //BCS 0xb0
     [Fact]
-    public void test_0xb0_bcs_implied_carry_clear()
+    public void test_0xb0_bcs_carry_clear()
     {
         Bus bus = new Bus();
         CPU cpu = new CPU(bus);
@@ -14,7 +14,7 @@ public class TestBCS
     }
 
     [Fact]
-    public void test_0xb0_bcs_implied_carry_set()
+    public void test_0xb0_bcs_carry_set()
     {
         Bus bus = new Bus();
         CPU cpu = new CPU(bus);
