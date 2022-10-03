@@ -16,7 +16,7 @@ public class TestADC
         Assert.True((cpu.status & (byte)CPU.FLAGS.N) == 0);
     }
 
-    
+    [Fact]
     public void test_0x69_adc_negative_flag()
     {
         Bus bus = new Bus();

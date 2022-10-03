@@ -14,13 +14,13 @@ public class TestORA
         Assert.True((cpu.status & (byte)CPU.FLAGS.N) == 0);
     }
 
-    
+    [Fact]
     public void test_0x09_ora_negative_flag()
     {
         Bus bus = new Bus();
         CPU cpu = new CPU(bus);
         cpu.interpret(new byte[] {0xa9, 0xcd, 0x09, 0xad, 0x00});
-        Assert.Equal(0x88, cpu.register_a);
+        Assert.Equal(0xed, cpu.register_a);
         Assert.True((cpu.status & (byte)CPU.FLAGS.Z) == 0);
         Assert.True((cpu.status & (byte)CPU.FLAGS.N) == (byte)CPU.FLAGS.N);
     }

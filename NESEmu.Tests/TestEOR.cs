@@ -14,7 +14,7 @@ public class TestEOR
         Assert.True((cpu.status & (byte)CPU.FLAGS.N) == 0);
     }
 
-    
+    [Fact]    
     public void test_0x49_eor_negative_flag()
     {
         Bus bus = new Bus();

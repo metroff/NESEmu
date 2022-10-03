@@ -14,13 +14,13 @@ public class TestAND
         Assert.True((cpu.status & (byte)CPU.FLAGS.N) == 0);
     }
 
-    
+    [Fact]
     public void test_0x29_and_negative_flag()
     {
         Bus bus = new Bus();
         CPU cpu = new CPU(bus);
         cpu.interpret(new byte[] {0xa9, 0xcd, 0x29, 0x81, 0x00});
-        Assert.Equal(0x80, cpu.register_a);
+        Assert.Equal(0x81, cpu.register_a);
         Assert.True((cpu.status & (byte)CPU.FLAGS.Z) == 0);
         Assert.True((cpu.status & (byte)CPU.FLAGS.N) == (byte)CPU.FLAGS.N);
     }
