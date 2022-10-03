@@ -15,7 +15,7 @@ namespace NESEmu
         //Helper
         ushort abs_address;
         ushort rel_address;
-        byte _op;
+        byte _opcode;
 
         //Flags
         public enum FLAGS {
@@ -49,14 +49,14 @@ namespace NESEmu
         public CPU(Bus bus) {
             _instructions = new Instruction[256] {
                 //0,                                 1,                                   2,                                   3,                                   4,                                   5,                                   6,                                   7,                                   8,                                   9,                                   a,                                   b,                                   c,                                   d,                                   e,                                   f
-                new Instruction("BRK", BRK, IMP, 7), new Instruction("ORA", ORA, IZX, 6), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("ORA", ORA, ZP0, 3), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("ORA", ORA, IMM, 2), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("ORA", ORA, ABS, 4), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), // 0
-                new Instruction("XXX", XXX, XXX, 7), new Instruction("ORA", ORA, IZY, 5), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("ORA", ORA, ZPX, 4), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("ORA", ORA, ABY, 4), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("ORA", ORA, ABX, 4), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), // 1
-                new Instruction("XXX", XXX, XXX, 7), new Instruction("AND", AND, IZX, 6), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("AND", AND, ZP0, 3), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("AND", AND, IMM, 2), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("AND", AND, ABS, 4), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), // 2
-                new Instruction("XXX", XXX, XXX, 7), new Instruction("AND", AND, IZY, 5), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("AND", AND, ZPX, 4), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("AND", AND, ABY, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("AND", AND, ABX, 4), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), // 3
-                new Instruction("XXX", XXX, XXX, 7), new Instruction("EOR", EOR, IZX, 6), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("EOR", EOR, ZP0, 3), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("EOR", EOR, IMM, 2), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("EOR", EOR, ABS, 4), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), // 4
-                new Instruction("XXX", XXX, XXX, 7), new Instruction("EOR", EOR, IZY, 5), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("EOR", EOR, ZPX, 4), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("EOR", EOR, ABY, 4), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("EOR", EOR, ABX, 4), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), // 5
-                new Instruction("XXX", XXX, XXX, 7), new Instruction("ADC", ADC, IZX, 6), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("ADC", ADC, ZP0, 3), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("ADC", ADC, IMM, 2), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("ADC", ADC, ABS, 4), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), // 6
-                new Instruction("XXX", XXX, XXX, 7), new Instruction("ADC", ADC, IZY, 5), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("ADC", ADC, ZPX, 4), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("ADC", ADC, ABY, 4), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("ADC", ADC, ABX, 4), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), // 7
+                new Instruction("BRK", BRK, IMP, 7), new Instruction("ORA", ORA, IZX, 6), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("ORA", ORA, ZP0, 3), new Instruction("ASL", ASL, ZP0, 5), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("ORA", ORA, IMM, 2), new Instruction("ASL", ASL, IMP, 2), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("ORA", ORA, ABS, 4), new Instruction("ASL", ASL, ABS, 6), new Instruction("XXX", XXX, XXX, 7), // 0
+                new Instruction("XXX", XXX, XXX, 7), new Instruction("ORA", ORA, IZY, 5), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("ORA", ORA, ZPX, 4), new Instruction("ASL", ASL, ZPX, 6), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("ORA", ORA, ABY, 4), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("ORA", ORA, ABX, 4), new Instruction("ASL", ASL, ABX, 7), new Instruction("XXX", XXX, XXX, 7), // 1
+                new Instruction("XXX", XXX, XXX, 7), new Instruction("AND", AND, IZX, 6), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("AND", AND, ZP0, 3), new Instruction("ROL", ROL, ZP0, 5), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("AND", AND, IMM, 2), new Instruction("ROL", ROL, IMP, 2), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("AND", AND, ABS, 4), new Instruction("ROL", ROL, ABS, 6), new Instruction("XXX", XXX, XXX, 7), // 2
+                new Instruction("XXX", XXX, XXX, 7), new Instruction("AND", AND, IZY, 5), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("AND", AND, ZPX, 4), new Instruction("ROL", ROL, ZPX, 6), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("AND", AND, ABY, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("AND", AND, ABX, 4), new Instruction("ROL", ROL, ABX, 7), new Instruction("XXX", XXX, XXX, 7), // 3
+                new Instruction("XXX", XXX, XXX, 7), new Instruction("EOR", EOR, IZX, 6), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("EOR", EOR, ZP0, 3), new Instruction("LSR", LSR, ZP0, 5), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("EOR", EOR, IMM, 2), new Instruction("LSR", LSR, IMP, 2), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("EOR", EOR, ABS, 4), new Instruction("LSR", LSR, ABS, 6), new Instruction("XXX", XXX, XXX, 7), // 4
+                new Instruction("XXX", XXX, XXX, 7), new Instruction("EOR", EOR, IZY, 5), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("EOR", EOR, ZPX, 4), new Instruction("LSR", LSR, ZPX, 6), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("EOR", EOR, ABY, 4), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("EOR", EOR, ABX, 4), new Instruction("LSR", LSR, ABX, 7), new Instruction("XXX", XXX, XXX, 7), // 5
+                new Instruction("XXX", XXX, XXX, 7), new Instruction("ADC", ADC, IZX, 6), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("ADC", ADC, ZP0, 3), new Instruction("ROR", ROR, ZP0, 5), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("ADC", ADC, IMM, 2), new Instruction("ROR", ROR, IMP, 2), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("ADC", ADC, ABS, 4), new Instruction("ROR", ROR, ABS, 6), new Instruction("XXX", XXX, XXX, 7), // 6
+                new Instruction("XXX", XXX, XXX, 7), new Instruction("ADC", ADC, IZY, 5), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("ADC", ADC, ZPX, 4), new Instruction("ROR", ROR, ZPX, 6), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("ADC", ADC, ABY, 4), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("ADC", ADC, ABX, 4), new Instruction("ROR", ROR, ABX, 7), new Instruction("XXX", XXX, XXX, 7), // 7
                 new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), // 8
                 new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 2), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), // 9
                 new Instruction("XXX", XXX, XXX, 7), new Instruction("LDA", LDA, IZX, 6), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("LDA", LDA, ZP0, 3), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("TAY", TAY, IMP, 2), new Instruction("LDA", LDA, IMM, 2), new Instruction("TAX", TAX, IMP, 2), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("LDA", LDA, ABS, 4), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), // a
@@ -74,6 +74,10 @@ namespace NESEmu
             return bus.memoryRead(addr);
         }
 
+        void write(ushort addr, byte data) {
+            bus.memoryWrite(addr, data);
+        }
+
         public void reset() {
             register_a = 0;
             register_x = 0;
@@ -83,15 +87,14 @@ namespace NESEmu
         }
 
         public void clock() {
-            byte opcode = read(PC);
-            _op = opcode;
+            _opcode = read(PC);
             PC++;
 
-            byte cycles = _instructions[opcode].cycles;
+            byte cycles = _instructions[_opcode].cycles;
 
-            cycles += _instructions[opcode].addressMode();
+            cycles += _instructions[_opcode].addressMode();
 
-            cycles += _instructions[opcode].operation();
+            cycles += _instructions[_opcode].operation();
         }
 
         public void interpret(byte[] program) {
@@ -277,6 +280,23 @@ namespace NESEmu
             return 1;
         }
 
+        byte ASL() {
+            if (_instructions[_opcode].addressMode == IMP) {
+                setFlag(FLAGS.C, (register_a & 0x80) == 0x80);
+                register_a <<= 1;
+                setFlagZNRegA();
+            } else {
+                byte data = read(abs_address);
+                setFlag(FLAGS.C, (data & 0x80) == 0x80);
+                data <<= 1;
+                write(abs_address, data);
+                setFlag(FLAGS.Z, (data == 0));
+                setFlag(FLAGS.N, ((data & 0x80) == 0x80));
+            } 
+                
+            return 0;
+        }
+
         byte BRK() {
             status |= (byte) FLAGS.B;
             return 0;
@@ -307,12 +327,71 @@ namespace NESEmu
             return 0;
         }
 
+        byte LSR() {
+            if (_instructions[_opcode].addressMode == IMP) {
+                setFlag(FLAGS.C, (register_a & 0x01) == 0x01);
+                register_a >>= 1;
+                setFlagZNRegA();
+            } else {
+                byte data = read(abs_address);
+                setFlag(FLAGS.C, (data & 0x01) == 0x01);
+                data >>= 1;
+                write(abs_address, data);
+                setFlag(FLAGS.Z, (data == 0));
+                setFlag(FLAGS.N, ((data & 0x80) == 0x80));
+            } 
+                
+            return 0;
+        }
+
         byte ORA() {
             register_a |= read(abs_address);
 
             setFlagZNRegA();
 
             return 1;
+        }
+
+        byte ROL() {
+            byte carryOld = getFlag(FLAGS.C);
+
+            if (_instructions[_opcode].addressMode == IMP) {
+                setFlag(FLAGS.C, (register_a & 0x80) == 0x80);
+                register_a <<= 1;
+                register_a |= carryOld;
+                setFlagZNRegA();
+            } else {
+                byte data = read(abs_address);
+                setFlag(FLAGS.C, (data & 0x80) == 0x80);
+                data <<= 1;
+                data |= carryOld;
+                write(abs_address, data);
+                setFlag(FLAGS.Z, (data == 0));
+                setFlag(FLAGS.N, ((data & 0x80) == 0x80));
+            } 
+
+            return 0;
+        }
+
+        byte ROR() {
+            byte carryOld = getFlag(FLAGS.C);
+
+            if (_instructions[_opcode].addressMode == IMP) {
+                setFlag(FLAGS.C, (register_a & 0x01) == 0x01);
+                register_a >>= 1;
+                register_a |= (byte) ((carryOld == 1) ? 0x80 : 0x00);
+                setFlagZNRegA();
+            } else {
+                byte data = read(abs_address);
+                setFlag(FLAGS.C, (data & 0x01) == 0x01);
+                data >>= 1;
+                data |= (byte) ((carryOld == 1) ? 0x80 : 0x00);
+                write(abs_address, data);
+                setFlag(FLAGS.Z, (data == 0));
+                setFlag(FLAGS.N, ((data & 0x80) == 0x80));
+            } 
+
+            return 0;
         }
 
         byte SBC() {
@@ -349,7 +428,7 @@ namespace NESEmu
         }
 
         byte XXX() {
-            throw new Exception("Unimplemented instruction " + _op.ToString("x") + _instructions[_op].name);
+            throw new Exception("Unimplemented instruction " + _opcode.ToString("x") + _instructions[_opcode].name);
         }
 
         void DissasembleCPU(byte opcode) {
