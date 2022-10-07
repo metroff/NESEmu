@@ -64,7 +64,7 @@ namespace NESEmu
                 new Instruction("BCS", BCS, REL, 2), new Instruction("LDA", LDA, IZY, 5), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("LDY", LDY, ZPX, 4), new Instruction("LDA", LDA, ZPX, 4), new Instruction("LDX", LDX, ZPY, 4), new Instruction("XXX", XXX, XXX, 7), new Instruction("CLV", CLV, IMP, 2), new Instruction("LDA", LDA, ABY, 4), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("LDY", LDY, ABX, 4), new Instruction("LDA", LDA, ABX, 4), new Instruction("LDX", LDX, ABY, 4), new Instruction("XXX", XXX, XXX, 7), // b
                 new Instruction("CPY", CPY, IMM, 2), new Instruction("CMP", CMP, IZX, 6), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("CPY", CPY, ZP0, 3), new Instruction("CMP", CMP, ZP0, 3), new Instruction("DEC", DEC, ZP0, 5), new Instruction("XXX", XXX, XXX, 7), new Instruction("INY", INY, IMP, 2), new Instruction("CMP", CMP, IMM, 2), new Instruction("DEX", DEX, IMP, 2), new Instruction("XXX", XXX, XXX, 7), new Instruction("CPY", CPY, ABS, 4), new Instruction("CMP", CMP, ABS, 4), new Instruction("DEC", DEC, ABS, 6), new Instruction("XXX", XXX, XXX, 7), // c
                 new Instruction("BNE", BNE, REL, 2), new Instruction("CMP", CMP, IZY, 5), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("CMP", CMP, ZPX, 4), new Instruction("DEC", DEC, ZPX, 6), new Instruction("XXX", XXX, XXX, 7), new Instruction("CLD", CLD, IMP, 2), new Instruction("CMP", CMP, ABY, 4), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("CMP", CMP, ABX, 4), new Instruction("DEC", DEC, ABX, 7), new Instruction("XXX", XXX, XXX, 7), // d
-                new Instruction("CPX", CPX, IMM, 2), new Instruction("SBC", SBC, IZX, 6), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("CPX", CPX, ZP0, 3), new Instruction("SBC", SBC, ZP0, 3), new Instruction("INC", INC, ZP0, 5), new Instruction("XXX", XXX, XXX, 7), new Instruction("INX", INX, IMP, 2), new Instruction("SBC", SBC, IMM, 2), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("CPX", CPX, ABS, 4), new Instruction("SBC", SBC, ABS, 4), new Instruction("INC", INC, ABS, 6), new Instruction("XXX", XXX, XXX, 7), // e
+                new Instruction("CPX", CPX, IMM, 2), new Instruction("SBC", SBC, IZX, 6), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("CPX", CPX, ZP0, 3), new Instruction("SBC", SBC, ZP0, 3), new Instruction("INC", INC, ZP0, 5), new Instruction("XXX", XXX, XXX, 7), new Instruction("INX", INX, IMP, 2), new Instruction("SBC", SBC, IMM, 2), new Instruction("NOP", NOP, IMP, 2), new Instruction("XXX", XXX, XXX, 7), new Instruction("CPX", CPX, ABS, 4), new Instruction("SBC", SBC, ABS, 4), new Instruction("INC", INC, ABS, 6), new Instruction("XXX", XXX, XXX, 7), // e
                 new Instruction("BEQ", BEQ, REL, 2), new Instruction("SBC", SBC, IZY, 5), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("SBC", SBC, ZPX, 4), new Instruction("INC", INC, ZPX, 6), new Instruction("XXX", XXX, XXX, 7), new Instruction("SED", SED, IMP, 2), new Instruction("SBC", SBC, ABY, 4), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("SBC", SBC, ABX, 4), new Instruction("INC", INC, ABX, 7), new Instruction("XXX", XXX, XXX, 7)  // f
             };
 
@@ -534,6 +534,10 @@ namespace NESEmu
                 setFlag(FLAGS.N, ((data & 0x80) == 0x80));
             } 
                 
+            return 0;
+        }
+
+        byte NOP() {
             return 0;
         }
 
