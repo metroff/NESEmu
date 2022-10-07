@@ -79,6 +79,16 @@ namespace NESEmu
             bus.memoryWrite(addr, data);
         }
 
+        void pushStack(byte data) {
+            write((ushort)(0x0100 | SP), data);
+            SP--;
+        }
+
+        byte pullStack() {
+            SP++;
+            return read((ushort)(0x0100 | SP));
+        }
+
         public void reset() {
             register_a = 0;
             register_x = 0;
@@ -86,6 +96,7 @@ namespace NESEmu
             status = 0x00 | (byte) FLAGS.U;
             PC = 0;
             _cycles = 0;
+            SP = 0xFF;
         }
 
         public void clock() {
@@ -110,9 +121,9 @@ namespace NESEmu
             PC = 0x0600;
 
             while(true) {
+                clock();
                 if (read(PC) == 0)
                     break;
-                clock();
             }
         }
 
@@ -354,7 +365,14 @@ namespace NESEmu
         }
 
         byte BRK() {
+            PC++;
+
             status |= (byte) FLAGS.B;
+            pushStack((byte)((PC >> 8) & 0x00FF));
+            pushStack((byte)(PC & 0x00FF));
+            pushStack(status);
+
+            PC = (ushort)((read(0xFFFF) << 8) | read(0xFFFE));
             return 0;
         }
 
