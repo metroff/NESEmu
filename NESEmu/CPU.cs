@@ -52,11 +52,11 @@ namespace NESEmu
                 //0,                                 1,                                   2,                                   3,                                   4,                                   5,                                   6,                                   7,                                   8,                                   9,                                   a,                                   b,                                   c,                                   d,                                   e,                                   f
                 new Instruction("BRK", BRK, IMP, 7), new Instruction("ORA", ORA, IZX, 6), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("ORA", ORA, ZP0, 3), new Instruction("ASL", ASL, ZP0, 5), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("ORA", ORA, IMM, 2), new Instruction("ASL", ASL, IMP, 2), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("ORA", ORA, ABS, 4), new Instruction("ASL", ASL, ABS, 6), new Instruction("XXX", XXX, XXX, 7), // 0
                 new Instruction("BPL", BPL, REL, 2), new Instruction("ORA", ORA, IZY, 5), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("ORA", ORA, ZPX, 4), new Instruction("ASL", ASL, ZPX, 6), new Instruction("XXX", XXX, XXX, 7), new Instruction("CLC", CLC, IMP, 2), new Instruction("ORA", ORA, ABY, 4), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("ORA", ORA, ABX, 4), new Instruction("ASL", ASL, ABX, 7), new Instruction("XXX", XXX, XXX, 7), // 1
-                new Instruction("XXX", XXX, XXX, 7), new Instruction("AND", AND, IZX, 6), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("BIT", BIT, ZP0, 3), new Instruction("AND", AND, ZP0, 3), new Instruction("ROL", ROL, ZP0, 5), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("AND", AND, IMM, 2), new Instruction("ROL", ROL, IMP, 2), new Instruction("XXX", XXX, XXX, 7), new Instruction("BIT", BIT, ABS, 4), new Instruction("AND", AND, ABS, 4), new Instruction("ROL", ROL, ABS, 6), new Instruction("XXX", XXX, XXX, 7), // 2
+                new Instruction("JSR", JSR, ABS, 6), new Instruction("AND", AND, IZX, 6), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("BIT", BIT, ZP0, 3), new Instruction("AND", AND, ZP0, 3), new Instruction("ROL", ROL, ZP0, 5), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("AND", AND, IMM, 2), new Instruction("ROL", ROL, IMP, 2), new Instruction("XXX", XXX, XXX, 7), new Instruction("BIT", BIT, ABS, 4), new Instruction("AND", AND, ABS, 4), new Instruction("ROL", ROL, ABS, 6), new Instruction("XXX", XXX, XXX, 7), // 2
                 new Instruction("BMI", BMI, REL, 2), new Instruction("AND", AND, IZY, 5), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("AND", AND, ZPX, 4), new Instruction("ROL", ROL, ZPX, 6), new Instruction("XXX", XXX, XXX, 7), new Instruction("SEC", SEC, IMP, 2), new Instruction("AND", AND, ABY, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("AND", AND, ABX, 4), new Instruction("ROL", ROL, ABX, 7), new Instruction("XXX", XXX, XXX, 7), // 3
                 new Instruction("XXX", XXX, XXX, 7), new Instruction("EOR", EOR, IZX, 6), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("EOR", EOR, ZP0, 3), new Instruction("LSR", LSR, ZP0, 5), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("EOR", EOR, IMM, 2), new Instruction("LSR", LSR, IMP, 2), new Instruction("XXX", XXX, XXX, 7), new Instruction("JMP", JMP, ABS, 3), new Instruction("EOR", EOR, ABS, 4), new Instruction("LSR", LSR, ABS, 6), new Instruction("XXX", XXX, XXX, 7), // 4
                 new Instruction("BVC", BVC, REL, 2), new Instruction("EOR", EOR, IZY, 5), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("EOR", EOR, ZPX, 4), new Instruction("LSR", LSR, ZPX, 6), new Instruction("XXX", XXX, XXX, 7), new Instruction("CLI", CLI, IMP, 2), new Instruction("EOR", EOR, ABY, 4), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("EOR", EOR, ABX, 4), new Instruction("LSR", LSR, ABX, 7), new Instruction("XXX", XXX, XXX, 7), // 5
-                new Instruction("XXX", XXX, XXX, 7), new Instruction("ADC", ADC, IZX, 6), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("ADC", ADC, ZP0, 3), new Instruction("ROR", ROR, ZP0, 5), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("ADC", ADC, IMM, 2), new Instruction("ROR", ROR, IMP, 2), new Instruction("XXX", XXX, XXX, 7), new Instruction("JMP", JMP, IND, 5), new Instruction("ADC", ADC, ABS, 4), new Instruction("ROR", ROR, ABS, 6), new Instruction("XXX", XXX, XXX, 7), // 6
+                new Instruction("RTS", RTS, IMP, 6), new Instruction("ADC", ADC, IZX, 6), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("ADC", ADC, ZP0, 3), new Instruction("ROR", ROR, ZP0, 5), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("ADC", ADC, IMM, 2), new Instruction("ROR", ROR, IMP, 2), new Instruction("XXX", XXX, XXX, 7), new Instruction("JMP", JMP, IND, 5), new Instruction("ADC", ADC, ABS, 4), new Instruction("ROR", ROR, ABS, 6), new Instruction("XXX", XXX, XXX, 7), // 6
                 new Instruction("BVS", BVS, REL, 2), new Instruction("ADC", ADC, IZY, 5), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("ADC", ADC, ZPX, 4), new Instruction("ROR", ROR, ZPX, 6), new Instruction("XXX", XXX, XXX, 7), new Instruction("SEI", SEI, IMP, 2), new Instruction("ADC", ADC, ABY, 4), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("ADC", ADC, ABX, 4), new Instruction("ROR", ROR, ABX, 7), new Instruction("XXX", XXX, XXX, 7), // 7
                 new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("DEY", DEY, IMP, 2), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), // 8
                 new Instruction("BCC", BCC, REL, 2), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 2), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), // 9
@@ -86,7 +86,8 @@ namespace NESEmu
 
         byte pullStack() {
             SP++;
-            return read((ushort)(0x0100 | SP));
+            byte data = read((ushort)(0x0100 | SP));
+            return data;
         }
 
         public void reset() {
@@ -487,6 +488,14 @@ namespace NESEmu
             return 0;
         }
 
+        byte JSR() {
+            PC--;
+            pushStack((byte)((PC >> 8) & 0x00FF));
+            pushStack((byte)(PC & 0x00FF));
+            PC = abs_address;
+            return 0;
+        }
+
         byte LDA() {
             register_a = read(abs_address);
 
@@ -559,6 +568,12 @@ namespace NESEmu
                 setFlag(FLAGS.N, ((data & 0x80) == 0x80));
             } 
 
+            return 0;
+        }
+
+        byte RTS() {
+            PC = (ushort)(pullStack() | (pullStack() << 8));
+            PC++;
             return 0;
         }
 
