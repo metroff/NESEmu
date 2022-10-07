@@ -60,8 +60,8 @@ namespace NESEmu
                 new Instruction("BVS", BVS, REL, 2), new Instruction("ADC", ADC, IZY, 5), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("ADC", ADC, ZPX, 4), new Instruction("ROR", ROR, ZPX, 6), new Instruction("XXX", XXX, XXX, 7), new Instruction("SEI", SEI, IMP, 2), new Instruction("ADC", ADC, ABY, 4), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("ADC", ADC, ABX, 4), new Instruction("ROR", ROR, ABX, 7), new Instruction("XXX", XXX, XXX, 7), // 7
                 new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("DEY", DEY, IMP, 2), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), // 8
                 new Instruction("BCC", BCC, REL, 2), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 2), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), // 9
-                new Instruction("XXX", XXX, XXX, 7), new Instruction("LDA", LDA, IZX, 6), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("LDA", LDA, ZP0, 3), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("TAY", TAY, IMP, 2), new Instruction("LDA", LDA, IMM, 2), new Instruction("TAX", TAX, IMP, 2), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("LDA", LDA, ABS, 4), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), // a
-                new Instruction("BCS", BCS, REL, 2), new Instruction("LDA", LDA, IZY, 5), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("LDA", LDA, ZPX, 4), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("CLV", CLV, IMP, 2), new Instruction("LDA", LDA, ABY, 4), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("LDA", LDA, ABX, 4), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), // b
+                new Instruction("LDY", LDY, IMM, 2), new Instruction("LDA", LDA, IZX, 6), new Instruction("LDX", LDX, IMM, 2), new Instruction("XXX", XXX, XXX, 7), new Instruction("LDY", LDY, ZP0, 3), new Instruction("LDA", LDA, ZP0, 3), new Instruction("LDX", LDX, ZP0, 3), new Instruction("XXX", XXX, XXX, 7), new Instruction("TAY", TAY, IMP, 2), new Instruction("LDA", LDA, IMM, 2), new Instruction("TAX", TAX, IMP, 2), new Instruction("XXX", XXX, XXX, 7), new Instruction("LDY", LDY, ABS, 4), new Instruction("LDA", LDA, ABS, 4), new Instruction("LDX", LDX, ABS, 4), new Instruction("XXX", XXX, XXX, 7), // a
+                new Instruction("BCS", BCS, REL, 2), new Instruction("LDA", LDA, IZY, 5), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("LDY", LDY, ZPX, 4), new Instruction("LDA", LDA, ZPX, 4), new Instruction("LDX", LDX, ZPY, 4), new Instruction("XXX", XXX, XXX, 7), new Instruction("CLV", CLV, IMP, 2), new Instruction("LDA", LDA, ABY, 4), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("LDY", LDY, ABX, 4), new Instruction("LDA", LDA, ABX, 4), new Instruction("LDX", LDX, ABY, 4), new Instruction("XXX", XXX, XXX, 7), // b
                 new Instruction("CPY", CPY, IMM, 2), new Instruction("CMP", CMP, IZX, 6), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("CPY", CPY, ZP0, 3), new Instruction("CMP", CMP, ZP0, 3), new Instruction("DEC", DEC, ZP0, 5), new Instruction("XXX", XXX, XXX, 7), new Instruction("INY", INY, IMP, 2), new Instruction("CMP", CMP, IMM, 2), new Instruction("DEX", DEX, IMP, 2), new Instruction("XXX", XXX, XXX, 7), new Instruction("CPY", CPY, ABS, 4), new Instruction("CMP", CMP, ABS, 4), new Instruction("DEC", DEC, ABS, 6), new Instruction("XXX", XXX, XXX, 7), // c
                 new Instruction("BNE", BNE, REL, 2), new Instruction("CMP", CMP, IZY, 5), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("CMP", CMP, ZPX, 4), new Instruction("DEC", DEC, ZPX, 6), new Instruction("XXX", XXX, XXX, 7), new Instruction("CLD", CLD, IMP, 2), new Instruction("CMP", CMP, ABY, 4), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("CMP", CMP, ABX, 4), new Instruction("DEC", DEC, ABX, 7), new Instruction("XXX", XXX, XXX, 7), // d
                 new Instruction("CPX", CPX, IMM, 2), new Instruction("SBC", SBC, IZX, 6), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("CPX", CPX, ZP0, 3), new Instruction("SBC", SBC, ZP0, 3), new Instruction("INC", INC, ZP0, 5), new Instruction("XXX", XXX, XXX, 7), new Instruction("INX", INX, IMP, 2), new Instruction("SBC", SBC, IMM, 2), new Instruction("XXX", XXX, XXX, 7), new Instruction("XXX", XXX, XXX, 7), new Instruction("CPX", CPX, ABS, 4), new Instruction("SBC", SBC, ABS, 4), new Instruction("INC", INC, ABS, 6), new Instruction("XXX", XXX, XXX, 7), // e
@@ -501,7 +501,23 @@ namespace NESEmu
 
             setFlagZN(register_a);
             
-            return 0;
+            return 1;
+        }
+
+        byte LDX() {
+            register_x = read(abs_address);
+
+            setFlagZN(register_x);
+
+            return 1;
+        }
+        
+        byte LDY() {
+            register_y = read(abs_address);
+
+            setFlagZN(register_y);
+
+            return 1;
         }
 
         byte LSR() {
