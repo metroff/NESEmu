@@ -95,9 +95,9 @@ namespace NESEmu
             register_x = 0;
             register_y = 0;
             status = 0x00 | (byte) FLAGS.U;
-            PC = 0;
             _cycles = 0;
-            SP = 0xFF;
+            SP = 0xFD;
+            PC = (ushort)(bus.memoryRead(0xFFFC) | (bus.memoryRead(0xFFFD) << 8));
         }
 
         public void clock() {
@@ -112,20 +112,24 @@ namespace NESEmu
         }
 
         public void interpret(byte[] program) {
-            for (int i = 0; i < program.Length; i++)
-            {
-                bus.memoryWrite((ushort)(0x0600 + i),program[i]);
-            }
+            load(program);
 
             reset();
-
-            PC = 0x0600;
 
             while(true) {
                 clock();
                 if (read(PC) == 0)
                     break;
             }
+        }
+
+        public void load(byte[] program) {
+            for (int i = 0; i < program.Length; i++)
+            {
+                bus.memoryWrite((ushort)(0x0600 + i),program[i]);
+            }
+            bus.memoryWrite(0xFFFC, 0x00);
+            bus.memoryWrite(0xFFFD, 0x06);
         }
 
         // Utility methods

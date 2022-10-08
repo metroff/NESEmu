@@ -9,6 +9,6 @@ public class TestPHA
         Bus bus = new Bus();
         CPU cpu = new CPU(bus);
         cpu.interpret(new byte[] {0xa9, 0x25, 0x48, 0x00});
-        Assert.Equal(0x25, bus.memoryRead(0x01ff));
+        Assert.Equal(0x25, bus.memoryRead(0x01fd));
     }
 }

@@ -9,6 +9,6 @@ public class TestPHP
         Bus bus = new Bus();
         CPU cpu = new CPU(bus);
         cpu.interpret(new byte[] {0x08, 0x00});
-        Assert.Equal(0x4, bus.memoryRead(0x01ff));
+        Assert.Equal(0x4, bus.memoryRead(0x01fd));
     }
 }
