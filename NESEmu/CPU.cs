@@ -715,7 +715,7 @@ namespace NESEmu
         }
 
         byte XXX() {
-            throw new Exception("Unimplemented instruction " + _opcode.ToString("x") + _instructions[_opcode].name);
+            throw new Exception("Unimplemented instruction " + _opcode.ToString("X2") + " " + _instructions[_opcode].name);
         }
 
         void DissasembleCPU(byte opcode) {
