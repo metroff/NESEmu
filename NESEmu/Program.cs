@@ -46,10 +46,13 @@ namespace NESEmu
                 0xea, 0xca, 0xd0, 0xfb, 0x60
             };
 
-            Bus bus = new Bus();
+            byte[] romFile = File.ReadAllBytes("../nestest.nes");
+            Rom rom = new Rom(romFile);
+            Bus bus = new Bus(rom);
             CPU cpu = new CPU(bus);
-            cpu.load(game_code);
+            // cpu.load(game_code);
             cpu.reset();
+            cpu.PC = 0xc000;
 
             if (!initSDL()) {
                 Console.WriteLine("Failed to initialize!");
@@ -94,19 +97,19 @@ namespace NESEmu
                 }
 
                 //Random apple color
-                bus.memoryWrite(0xfe, (byte) rnd.Next(1, 16));
+                // bus.memoryWrite(0xfe, (byte) rnd.Next(1, 16));
 
-                if (readScreenState(ref bus, ref screenState)) {
-                    // for (int i = 0; i < 32*32; i++)
-                    // {
-                    //     Console.Write(screenState[i] + " ");
-                    // }
-                    //Console.WriteLine();
-                    SDL.SDL_UpdateTexture(gTexture, IntPtr.Zero, screenStatePtr, 32*4);
-                    SDL.SDL_RenderClear(gRenderer);
-                    SDL.SDL_RenderCopy(gRenderer, gTexture, IntPtr.Zero, IntPtr.Zero);
-                    SDL.SDL_RenderPresent(gRenderer);
-                }
+                // if (readScreenState(ref bus, ref screenState)) {
+                //     // for (int i = 0; i < 32*32; i++)
+                //     // {
+                //     //     Console.Write(screenState[i] + " ");
+                //     // }
+                //     //Console.WriteLine();
+                //     SDL.SDL_UpdateTexture(gTexture, IntPtr.Zero, screenStatePtr, 32*4);
+                //     SDL.SDL_RenderClear(gRenderer);
+                //     SDL.SDL_RenderCopy(gRenderer, gTexture, IntPtr.Zero, IntPtr.Zero);
+                //     SDL.SDL_RenderPresent(gRenderer);
+                // }
 
                 
 
