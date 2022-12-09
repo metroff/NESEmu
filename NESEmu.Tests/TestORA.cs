@@ -2,11 +2,13 @@ namespace NESEmu.Tests;
 
 public class TestORA
 {
+    Rom rom = TestRom.testRom();
+
     //ORA 0x09
     [Fact]
     public void test_0x09_ora_immediate()
     {
-        Bus bus = new Bus();
+        Bus bus = new Bus(rom);
         CPU cpu = new CPU(bus);
         cpu.interpret(new byte[] {0xa9, 0x5a, 0x09, 0x71, 0x00});
         Assert.Equal(0x7b, cpu.register_a);
@@ -17,7 +19,7 @@ public class TestORA
     [Fact]
     public void test_0x09_ora_negative_flag()
     {
-        Bus bus = new Bus();
+        Bus bus = new Bus(rom);
         CPU cpu = new CPU(bus);
         cpu.interpret(new byte[] {0xa9, 0xcd, 0x09, 0xad, 0x00});
         Assert.Equal(0xed, cpu.register_a);
@@ -28,7 +30,7 @@ public class TestORA
     [Fact]
     public void test_0x09_ora_zero_flag()
     {
-        Bus bus = new Bus();
+        Bus bus = new Bus(rom);
         CPU cpu = new CPU(bus);
         cpu.interpret(new byte[] {0xa9, 0x00, 0x09, 0x00, 0x00});
         Assert.Equal(0x00, cpu.register_a);

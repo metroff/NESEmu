@@ -2,11 +2,13 @@ namespace NESEmu.Tests;
 
 public class TestDEY
 {
+    Rom rom = TestRom.testRom();
+
     //DEY 0x88
     [Fact]
     public void test_0x88_dey_zero_page()
     {
-        Bus bus = new Bus();
+        Bus bus = new Bus(rom);
         CPU cpu = new CPU(bus);
         cpu.interpret(new byte[] {0xa9, 0x20, 0xa8, 0x88, 0x00});
         Assert.Equal(0x1f, cpu.register_y);
@@ -17,7 +19,7 @@ public class TestDEY
     [Fact]
     public void test_0x88_dey_negative_flag()
     {
-        Bus bus = new Bus();
+        Bus bus = new Bus(rom);
         CPU cpu = new CPU(bus);
         cpu.interpret(new byte[] {0xa9, 0x00, 0xa8, 0x88, 0x00});
         Assert.Equal(0xff, cpu.register_y);
@@ -28,7 +30,7 @@ public class TestDEY
     [Fact]
     public void test_0x88_dey_zero_flag()
     {
-        Bus bus = new Bus();
+        Bus bus = new Bus(rom);
         CPU cpu = new CPU(bus);
         cpu.interpret(new byte[] {0xa9, 0x01, 0xa8, 0x88, 0x00});
         Assert.Equal(0x00, cpu.register_y);

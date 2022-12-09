@@ -2,11 +2,13 @@ namespace NESEmu.Tests;
 
 public class TestROR
 {
+    Rom rom = TestRom.testRom();
+
     //ROL 0x6a
     [Fact]
     public void test_0x6a_rol_implied()
     {
-        Bus bus = new Bus();
+        Bus bus = new Bus(rom);
         CPU cpu = new CPU(bus);
         cpu.interpret(new byte[] {0xa9, 0x04, 0x6a, 0x00});
         Assert.Equal(0x02, cpu.register_a);
@@ -18,7 +20,7 @@ public class TestROR
     [Fact]
     public void test_0x6a_rol_carry_flag()
     {
-        Bus bus = new Bus();
+        Bus bus = new Bus(rom);
         CPU cpu = new CPU(bus);
         cpu.interpret(new byte[] {0xa9, 0x05, 0x6a, 0x00});
         Assert.Equal(0x02, cpu.register_a);
@@ -30,7 +32,7 @@ public class TestROR
     [Fact]
     public void test_0x6a_rol_zero_flag()
     {
-        Bus bus = new Bus();
+        Bus bus = new Bus(rom);
         CPU cpu = new CPU(bus);
         cpu.interpret(new byte[] {0xa9, 0x01, 0x6a, 0x00});
         Assert.Equal(0x00, cpu.register_a);
@@ -43,7 +45,7 @@ public class TestROR
     [Fact]
     public void test_0X66_rol_zero_page()
     {
-        Bus bus = new Bus();
+        Bus bus = new Bus(rom);
         CPU cpu = new CPU(bus);
         bus.memoryWrite(0x0010, 0x04);
         cpu.interpret(new byte[] {0X66, 0x10, 0x00});
@@ -56,7 +58,7 @@ public class TestROR
     [Fact]
     public void test_0X66_rol_carry_flag()
     {
-        Bus bus = new Bus();
+        Bus bus = new Bus(rom);
         CPU cpu = new CPU(bus);
         bus.memoryWrite(0x0010, 0x05);
         cpu.interpret(new byte[] {0X66, 0x10, 0x00});
@@ -69,7 +71,7 @@ public class TestROR
     [Fact]
     public void test_0X66_rol_zero_flag()
     {
-        Bus bus = new Bus();
+        Bus bus = new Bus(rom);
         CPU cpu = new CPU(bus);
         bus.memoryWrite(0x0010, 0x01);
         cpu.interpret(new byte[] {0X66, 0x10, 0x00});
