@@ -16,7 +16,7 @@ namespace NESEmu
         ushort abs_address;
         ushort rel_address;
         byte _opcode;
-        byte _cycles;
+        uint _cycles;
 
         //Flags
         public enum FLAGS {
@@ -101,18 +101,27 @@ namespace NESEmu
             PC = (ushort)(bus.memoryRead(0xFFFC) | (bus.memoryRead(0xFFFD) << 8));
         }
 
-        public void clock() {
+        public uint clock() {
+            if (bus.pollNmiInterruptStatus()) {
+                NMI();
+            }
+
             _opcode = read(PC);
 
-            DissasembleCPU();
+            // DissasembleCPU();
 
             PC++;
 
-            byte cycles = _instructions[_opcode].cycles;
+            _cycles = _instructions[_opcode].cycles;
 
-            cycles += _instructions[_opcode].addressMode();
+            byte address_cycles = _instructions[_opcode].addressMode();
+            byte op_cycles = _instructions[_opcode].operation();
 
-            cycles += _instructions[_opcode].operation();
+            _cycles += (byte)(address_cycles & op_cycles);
+
+            bus.tick((byte)_cycles);
+
+            return _cycles;
         }
 
         public void interpret(byte[] program) {
@@ -164,6 +173,20 @@ namespace NESEmu
 
                 PC = jump_address;
             }
+        }
+
+        void NMI() {
+            pushStack((byte)((PC >> 8) & 0x00FF));
+            pushStack((byte)(PC & 0x00FF));
+
+            setFlag(FLAGS.B, false);
+            setFlag(FLAGS.U, true);
+            setFlag(FLAGS.I, true);
+
+            pushStack(status);
+            bus.tick(2);
+
+            PC = (ushort)((ushort)read(0xFFFA) | ((ushort)read(0xFFFA + 1) << 8));
         }
 
         // Addressing modes
