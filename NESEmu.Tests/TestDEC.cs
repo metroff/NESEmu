@@ -3,12 +3,13 @@ namespace NESEmu.Tests;
 public class TestDEC
 {
     Rom rom = TestRom.testRom();
+Bus.gameloopDel callback = delegate(ref PPU ppu, ref Joypad joypad){};
 
     //DEC 0xc6
     [Fact]
     public void test_0xc6_dec_zero_page()
     {
-        Bus bus = new Bus(rom);
+        Bus bus = new Bus(rom, callback);
         CPU cpu = new CPU(bus);
         bus.memoryWrite(0x0020, 0x20);
         cpu.interpret(new byte[] {0xc6, 0x20, 0x00});
@@ -20,7 +21,7 @@ public class TestDEC
     [Fact]
     public void test_0xc6_dec_negative_flag()
     {
-        Bus bus = new Bus(rom);
+        Bus bus = new Bus(rom, callback);
         CPU cpu = new CPU(bus);
         bus.memoryWrite(0x0020, 0x00);
         cpu.interpret(new byte[] {0xc6, 0x20, 0x00});
@@ -32,7 +33,7 @@ public class TestDEC
     [Fact]
     public void test_0xc6_dec_zero_flag()
     {
-        Bus bus = new Bus(rom);
+        Bus bus = new Bus(rom, callback);
         CPU cpu = new CPU(bus);
         bus.memoryWrite(0x0020, 0x01);
         cpu.interpret(new byte[] {0xc6, 0x20, 0x00});

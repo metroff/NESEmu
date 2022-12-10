@@ -28,7 +28,7 @@ namespace NESEmu
             if (address >= 0x0000 && address <= 0x1fff) {
                 return cpuRam[address & 0x07ff];
             } 
-            else if (address == 0x2000 | address == 0x2001 | address == 0x2003 | address == 0x2005 | address == 0x2006 | address == 0x4014) {
+            else if (address == 0x2000 || address == 0x2001 || address == 0x2003 || address == 0x2005 || address == 0x2006 || address == 0x4014) {
                 // throw new Exception(string.Format("Attempt to read from write-only PPU address {0:X}", address));
                 return 0;
             }
@@ -92,7 +92,7 @@ namespace NESEmu
             else if (address == 0x2007) {
                 ppu.writeData(data);
             }
-            else if ((address >= 0x4000 && address <= 0x4013) | address == 0x4015) {
+            else if ((address >= 0x4000 && address <= 0x4013) || address == 0x4015) {
                 // ignore APU
             }
             else if (address == 0x4016) {

@@ -5,13 +5,13 @@ namespace NESEmu {
         public byte[] palleteTable;
         public byte[] vram;
         public byte[] oamData;
-        Mirroring _mirroring;
+        public Mirroring _mirroring;
         public AddressRegister _addr;
         public ControlRegister _ctrl;
         MaskRegister _mask;
-        ScrollRegister _scroll;
+        public ScrollRegister _scroll;
         public StatusRegister _status;
-        byte _internalDataByffer;
+        byte _internalDataBuffer;
         byte oamAddr;
 
         ushort _scanline;
@@ -29,7 +29,7 @@ namespace NESEmu {
             _mask = new MaskRegister();
             _scroll = new ScrollRegister();
             _status = new StatusRegister();
-            _internalDataByffer = 0;
+            _internalDataBuffer = 0;
             oamAddr = 0;
             _cycles = 0;
             _scanline = 0;
@@ -39,6 +39,9 @@ namespace NESEmu {
         public bool tick(byte cycles) {
             _cycles += cycles;
             if (_cycles >= 341) {
+                if (isSpriteZeroHit(_cycles)) {
+                    _status.setSpriteZeroHit(true);
+                }
                 _cycles -= 341;
                 _scanline += 1;
 
@@ -67,6 +70,12 @@ namespace NESEmu {
                 return true;
             }
             return nmiInterrupt;
+        }
+
+        bool isSpriteZeroHit(uint cycle) {
+            ushort y = oamData[0];
+            ushort x = oamData[3];
+            return (y == _scanline) && (x <= cycle) && _mask.showSprites();
         }
 
         public void addrWrite(byte value) {
@@ -119,14 +128,19 @@ namespace NESEmu {
             ushort vram_index = (ushort)(mirrored_vram - 0x2000);
             ushort name_table = (ushort)(vram_index / 0x400);
 
-            if (_mirroring == Mirroring.VERTICAL && (name_table == 2 | name_table == 3)) {
-                return (ushort)(vram_index - 0x800);
-            } else if (_mirroring == Mirroring.HORIZONTAL && (name_table == 1 | name_table == 2)) {
-                return (ushort)(vram_index - 0x400);
-            } else if (_mirroring == Mirroring.HORIZONTAL && name_table == 3) {
-                return (ushort)(vram_index - 0x800);
-            } else 
-                return vram_index;
+            switch ((_mirroring, name_table)) {
+                case (Mirroring.VERTICAL, 2):
+                case (Mirroring.VERTICAL, 3):
+                    return (ushort)(vram_index - 0x800);
+                case (Mirroring.HORIZONTAL, 2):
+                    return (ushort)(vram_index - 0x400);
+                case (Mirroring.HORIZONTAL, 1):
+                    return (ushort)(vram_index - 0x400);
+                case (Mirroring.HORIZONTAL, 3):
+                    return (ushort)(vram_index - 0x800);
+                default:
+                    return vram_index;
+            }
         }
 
         public void writeData(byte value) {
@@ -137,7 +151,7 @@ namespace NESEmu {
                 vram[mirrorVramAddress(address)] = value;
             } else if (address >= 0x3000 && address <= 0x3eff) {
                 throw new Exception(string.Format("Unexpected address write, requested = {0:X4}", address));
-            } else if (address == 0x3f10 | address == 0x3f14 | address == 0x3f18 | address == 0x3f1c) {
+            } else if (address == 0x3f10 || address == 0x3f14 || address == 0x3f18 || address == 0x3f1c) {
                 ushort mirrored_address = (ushort)(address - 0x10);
                 palleteTable[(mirrored_address - 0x3f00)] = value;
             } else if (address >= 0x3f00 && address <= 0x3fff) {
@@ -153,12 +167,12 @@ namespace NESEmu {
             incrementVramAddr();
 
             if (address >= 0x0000 && address <= 0x1fff) {
-                byte result = _internalDataByffer;
-                _internalDataByffer = chrRom[address];
+                byte result = _internalDataBuffer;
+                _internalDataBuffer = chrRom[address];
                 return result;
             } else if (address >= 0x2000 && address <= 0x2fff) {
-                byte result = _internalDataByffer;
-                _internalDataByffer = vram[mirrorVramAddress(address)];
+                byte result = _internalDataBuffer;
+                _internalDataBuffer = vram[mirrorVramAddress(address)];
                 return result;
             } else if (address >= 0x3000 && address <= 0x3eff) {
                 throw new Exception(string.Format("Unexpected address access, requested = {0:X4}", address));
@@ -393,8 +407,8 @@ namespace NESEmu {
 
     public class ScrollRegister
     {
-        byte _scrollX;
-        byte _scrollY;
+        public byte _scrollX;
+        public byte _scrollY;
         bool _latch;
 
         public ScrollRegister() {
@@ -408,6 +422,7 @@ namespace NESEmu {
                 _scrollX = data;
             else
                 _scrollY = data;
+                
             _latch = !_latch;
         } 
 

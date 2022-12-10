@@ -3,12 +3,13 @@ namespace NESEmu.Tests;
 public class TestCMP
 {
     Rom rom = TestRom.testRom();
+Bus.gameloopDel callback = delegate(ref PPU ppu, ref Joypad joypad){};
 
     //CMP 0xc9
     [Fact]
     public void test_0xc9_cmp_carry_flag()
     {
-        Bus bus = new Bus(rom);
+        Bus bus = new Bus(rom, callback);
         CPU cpu = new CPU(bus);
         bus.memoryWrite(0x0020, 0x20);
         cpu.interpret(new byte[] {0xa9, 0x25, 0xc9, 0x20, 0x00});
@@ -20,7 +21,7 @@ public class TestCMP
     [Fact]
     public void test_0xc9_cmp_negative_flag()
     {
-        Bus bus = new Bus(rom);
+        Bus bus = new Bus(rom, callback);
         CPU cpu = new CPU(bus);
         bus.memoryWrite(0x0020, 0x20);
         cpu.interpret(new byte[] {0xa9, 0x10, 0xc9, 0x20, 0x00});
@@ -32,7 +33,7 @@ public class TestCMP
     [Fact]
     public void test_0xc9_cmp_zero_flag()
     {
-        Bus bus = new Bus(rom);
+        Bus bus = new Bus(rom, callback);
         CPU cpu = new CPU(bus);
         bus.memoryWrite(0x0020, 0x20);
         cpu.interpret(new byte[] {0xa9, 0x20, 0xc9, 0x20, 0x00});

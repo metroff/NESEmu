@@ -273,7 +273,7 @@ namespace NESEmu
                             default:
                                 throw new Exception("Pallette does not exist.");
                         }
-                        frame.setPixel(tile_x + x, tile_y + y, rgb.ToArray());
+                        frame.setPixel((uint)(tile_x + x), (uint)(tile_y + y), rgb.ToArray());
                     }   
                 }
                 tile_x += 10;
@@ -305,7 +305,7 @@ namespace NESEmu
                 return;
             }
 
-            byte[] romFile = File.ReadAllBytes("../donkeykong.nes");
+            byte[] romFile = File.ReadAllBytes("../ice.nes");
             Rom rom = new Rom(romFile);
 
             Frame frame = new Frame();
@@ -519,7 +519,7 @@ namespace NESEmu
                         default:
                             throw new Exception("Pallette does not exist.");
                     }
-                    frame.setPixel(x, y, rgb.ToArray());
+                    frame.setPixel((uint)x, (uint)y, rgb.ToArray());
                 }
             }
 

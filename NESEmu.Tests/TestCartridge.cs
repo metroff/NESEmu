@@ -33,6 +33,7 @@ public class TestRom {
 public class TestCartridge
 {
     Rom rom = TestRom.testRom();
+Bus.gameloopDel callback = delegate(ref PPU ppu, ref Joypad joypad){};
 
     //BVS 0x70
     [Fact]

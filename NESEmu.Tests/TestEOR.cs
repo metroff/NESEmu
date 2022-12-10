@@ -3,12 +3,13 @@ namespace NESEmu.Tests;
 public class TestEOR
 {
     Rom rom = TestRom.testRom();
+Bus.gameloopDel callback = delegate(ref PPU ppu, ref Joypad joypad){};
 
     //EOR 0x49
     [Fact]
     public void test_0x49_eor_immediate()
     {
-        Bus bus = new Bus(rom);
+        Bus bus = new Bus(rom, callback);
         CPU cpu = new CPU(bus);
         cpu.interpret(new byte[] {0xa9, 0xcd, 0x49, 0x81, 0x00});
         Assert.Equal(0x4c, cpu.register_a);
@@ -19,7 +20,7 @@ public class TestEOR
     [Fact]    
     public void test_0x49_eor_negative_flag()
     {
-        Bus bus = new Bus(rom);
+        Bus bus = new Bus(rom, callback);
         CPU cpu = new CPU(bus);
         cpu.interpret(new byte[] {0xa9, 0x25, 0x49, 0xad, 0x00});
         Assert.Equal(0x88, cpu.register_a);
@@ -30,7 +31,7 @@ public class TestEOR
     [Fact]
     public void test_0x49_eor_zero_flag()
     {
-        Bus bus = new Bus(rom);
+        Bus bus = new Bus(rom, callback);
         CPU cpu = new CPU(bus);
         cpu.interpret(new byte[] {0xa9, 0xaa, 0x49, 0xaa, 0x00});
         Assert.Equal(0x00, cpu.register_a);

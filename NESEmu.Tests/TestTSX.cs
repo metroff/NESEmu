@@ -3,12 +3,13 @@ namespace NESEmu.Tests;
 public class TestTSX
 {
     Rom rom = TestRom.testRom();
+Bus.gameloopDel callback = delegate(ref PPU ppu, ref Joypad joypad){};
 
     //TSX 0xba
     [Fact]
     public void test_0xba_tsx_implied()
     {
-        Bus bus = new Bus(rom);
+        Bus bus = new Bus(rom, callback);
         CPU cpu = new CPU(bus);
         cpu.interpret(new byte[] {0xa2, 0x69, 0x9a, 0xa2, 0x21, 0xba, 0x00});
         Assert.Equal(0x69, cpu.register_x);
@@ -17,7 +18,7 @@ public class TestTSX
     [Fact]
     public void test_0xba_tsx_zero_flag()
     {
-        Bus bus = new Bus(rom);
+        Bus bus = new Bus(rom, callback);
         CPU cpu = new CPU(bus);
         cpu.interpret(new byte[] {0xa2, 0x00, 0x9a, 0xa2, 0x21, 0xba, 0x00});
         Assert.Equal(0x00, cpu.register_x);
@@ -27,7 +28,7 @@ public class TestTSX
     [Fact]
     public void test_0xba_tsx_negative_flag()
     {
-        Bus bus = new Bus(rom);
+        Bus bus = new Bus(rom, callback);
         CPU cpu = new CPU(bus);
         cpu.interpret(new byte[] {0xa2, 0x80, 0x9a, 0xa2, 0x21, 0xba, 0x00});
         Assert.Equal(0x80, cpu.register_x);
