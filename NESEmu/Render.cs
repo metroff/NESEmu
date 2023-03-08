@@ -42,49 +42,6 @@ namespace NESEmu
         }
 
         public static void render(ref PPU ppu, ref Frame frame) {
-            // ushort bank = ppu._ctrl.bknd_pattern_address();
-            // // Background
-            // for (int i = 0; i < 0x3c0; i++)
-            // {
-            //     ushort tile = (ushort) ppu.vram[i];
-            //     ushort tile_column = (ushort) (i % 32);
-            //     ushort tile_row = (ushort)(i / 32);
-            //     List<byte> tiles = ppu.chrRom.GetRange(bank + tile *16, 16);
-            //     byte[] pallete = backgroundPallette(ref ppu, tile_column, tile_row);
-
-            //     for (int y = 0; y <= 7; y++)
-            //     {
-            //         byte upper = tiles[y];
-            //         byte lower = tiles[y + 8];
-
-            //         for (int x = 7; x >= 0; x--)
-            //         {
-            //             byte value = (byte)((1 & lower) << 1 | (1 & upper));
-            //             upper >>= 1;
-            //             lower >>= 1;
-
-            //             List<byte> rgb;
-            //             switch (value)
-            //             {
-            //                 case 0:
-            //                     rgb = Pallete.SYSTEM_PALLETE[ppu.palleteTable[0]];
-            //                     break;
-            //                 case 1:
-            //                     rgb = Pallete.SYSTEM_PALLETE[pallete[1]];
-            //                     break;
-            //                 case 2:
-            //                     rgb = Pallete.SYSTEM_PALLETE[pallete[2]];
-            //                     break;
-            //                 case 3:
-            //                     rgb = Pallete.SYSTEM_PALLETE[pallete[3]];
-            //                     break;
-            //                 default:
-            //                     throw new Exception("Pallette does not exist.");
-            //             }
-            //             frame.setPixel(tile_column * 8 + x, tile_row * 8 + y, rgb.ToArray());
-            //         }
-            //     }
-            // }
             ushort scroll_x = ppu._scroll._scrollX;
             ushort scroll_y = ppu._scroll._scrollY;
 

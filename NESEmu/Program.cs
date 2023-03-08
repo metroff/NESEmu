@@ -128,7 +128,7 @@ namespace NESEmu
                 return false;
             }
 
-            gWindow = SDL.SDL_CreateWindow("Tile viewer", SDL.SDL_WINDOWPOS_UNDEFINED, SDL.SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL.SDL_WindowFlags.SDL_WINDOW_SHOWN);
+            gWindow = SDL.SDL_CreateWindow("NESEmu", SDL.SDL_WINDOWPOS_UNDEFINED, SDL.SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL.SDL_WindowFlags.SDL_WINDOW_SHOWN);
             if (gWindow == IntPtr.Zero) {
                 Console.WriteLine("Window could not be created! SDL_Error: {0}", SDL.SDL_GetError());
                 return false;
