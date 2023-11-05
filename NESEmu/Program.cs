@@ -21,6 +21,109 @@ namespace NESEmu
 
         Stopwatch stopwatch = new Stopwatch();
 
+        // Prieš pertvarkymą kognityvinis kompleksiškumas 24, ciklomatinis kompleksiškumas 15
+        // static void Main(string[] args) {
+        //     Random rnd = new Random();
+        //     string filename = "";
+
+        //     Stopwatch stopWatch = new Stopwatch();
+
+        //     if (!initSDL()) {
+        //         Console.WriteLine("Failed to initialize!");
+        //         return;
+        //     }
+
+        //     while(filename == "") {
+        //         SDL.SDL_Event e;
+        //         while( SDL.SDL_PollEvent(out e) != 0) {
+        //             if (e.type == SDL.SDL_EventType.SDL_QUIT) {
+        //                 System.Environment.Exit(1);
+        //             }
+        //             else if (e.type == SDL.SDL_EventType.SDL_DROPFILE) {
+        //                 filename = SDL.UTF8_ToManaged(e.drop.file, true);
+        //             }
+        //         }
+        //     }
+
+        //     Console.WriteLine("{0}", filename);
+
+        //     byte[] romFile = File.ReadAllBytes(filename);
+        //     Rom rom = new Rom(romFile);
+
+        //     Frame frame = new Frame();
+
+        //     GCHandle pinnedArray = GCHandle.Alloc(frame.data, GCHandleType.Pinned);
+        //     IntPtr frame_ptr = pinnedArray.AddrOfPinnedObject();
+
+        //     Dictionary<SDL.SDL_Keycode, Joypad.JoypadButton> key_map = new Dictionary<SDL.SDL_Keycode, Joypad.JoypadButton>();
+        //     key_map.Add(SDL.SDL_Keycode.SDLK_DOWN, Joypad.JoypadButton.DOWN);
+        //     key_map.Add(SDL.SDL_Keycode.SDLK_UP, Joypad.JoypadButton.UP);
+        //     key_map.Add(SDL.SDL_Keycode.SDLK_RIGHT, Joypad.JoypadButton.RIGHT);
+        //     key_map.Add(SDL.SDL_Keycode.SDLK_LEFT, Joypad.JoypadButton.LEFT);
+        //     key_map.Add(SDL.SDL_Keycode.SDLK_SPACE, Joypad.JoypadButton.SELECT);
+        //     key_map.Add(SDL.SDL_Keycode.SDLK_RETURN, Joypad.JoypadButton.START);
+        //     key_map.Add(SDL.SDL_Keycode.SDLK_a, Joypad.JoypadButton.BUTTON_A);
+        //     key_map.Add(SDL.SDL_Keycode.SDLK_s, Joypad.JoypadButton.BUTTON_B);
+
+
+        //     bool exit = false;
+
+        //     Bus.gameloopDel callback = delegate(ref PPU ppu, ref Joypad joypad) {
+        //         Renderer.render(ref ppu, ref frame);
+
+        //         SDL.SDL_UpdateTexture(gTexture, IntPtr.Zero, frame_ptr, 256*3);
+
+        //         SDL.SDL_RenderClear(gRenderer);
+        //         SDL.SDL_RenderCopy(gRenderer, gTexture, IntPtr.Zero, IntPtr.Zero);
+        //         SDL.SDL_RenderPresent(gRenderer);
+
+        //         SDL.SDL_Event e;
+        //         while( SDL.SDL_PollEvent(out e) != 0) {
+        //             if (e.type == SDL.SDL_EventType.SDL_QUIT) {
+        //                 exit = true;
+        //             }
+        //             else if (e.type == SDL.SDL_EventType.SDL_KEYDOWN) {
+        //                 Joypad.JoypadButton key;
+        //                 if (key_map.TryGetValue(e.key.keysym.sym, out key)) {
+        //                     joypad.setButtonPressedStatus(key, true);
+        //                 }
+        //             }
+        //             else if (e.type == SDL.SDL_EventType.SDL_KEYUP) {
+        //                 Joypad.JoypadButton key;
+        //                 if (key_map.TryGetValue(e.key.keysym.sym, out key)) {
+        //                     joypad.setButtonPressedStatus(key, false);
+        //                 }
+        //             }
+        //         }
+        //     };
+
+        //     Bus bus = new Bus(rom, callback);
+
+        //     CPU cpu = new CPU(bus);
+        //     cpu.reset();
+
+        //     int cyclesLeft = 0;
+
+        //     stopWatch.Start();
+
+        //     while (!exit) {
+        //         if (stopWatch.Elapsed.TotalMilliseconds >= 4) { // 16: 28830, 8: 14415, 4: 7207
+        //             stopWatch.Reset();
+        //             stopWatch.Start();
+        //             cyclesLeft += 7207;
+        //         }
+        //         while(cyclesLeft > 0)
+        //         {
+        //             cyclesLeft -= (int) cpu.clock();
+        //         }
+
+        //     } 
+
+        //     Marshal.FreeHGlobal(frame_ptr);
+        //     close();
+        // }
+
+        // Po pertvarkymo kognityvinis kompleksiškumas 6, ciklomatinis kompleksiškumas 5
         static void Main(string[] args) {
             Random rnd = new Random();
             string filename = "";
@@ -32,17 +135,7 @@ namespace NESEmu
                 return;
             }
 
-            while(filename == "") {
-                SDL.SDL_Event e;
-                while( SDL.SDL_PollEvent(out e) != 0) {
-                    if (e.type == SDL.SDL_EventType.SDL_QUIT) {
-                        System.Environment.Exit(1);
-                    }
-                    else if (e.type == SDL.SDL_EventType.SDL_DROPFILE) {
-                        filename = SDL.UTF8_ToManaged(e.drop.file, true);
-                    }
-                }
-            }
+            filename = waitForFile();
 
             Console.WriteLine("{0}", filename);
 
@@ -54,47 +147,13 @@ namespace NESEmu
             GCHandle pinnedArray = GCHandle.Alloc(frame.data, GCHandleType.Pinned);
             IntPtr frame_ptr = pinnedArray.AddrOfPinnedObject();
 
-            Dictionary<SDL.SDL_Keycode, Joypad.JoypadButton> key_map = new Dictionary<SDL.SDL_Keycode, Joypad.JoypadButton>();
-            key_map.Add(SDL.SDL_Keycode.SDLK_DOWN, Joypad.JoypadButton.DOWN);
-            key_map.Add(SDL.SDL_Keycode.SDLK_UP, Joypad.JoypadButton.UP);
-            key_map.Add(SDL.SDL_Keycode.SDLK_RIGHT, Joypad.JoypadButton.RIGHT);
-            key_map.Add(SDL.SDL_Keycode.SDLK_LEFT, Joypad.JoypadButton.LEFT);
-            key_map.Add(SDL.SDL_Keycode.SDLK_SPACE, Joypad.JoypadButton.SELECT);
-            key_map.Add(SDL.SDL_Keycode.SDLK_RETURN, Joypad.JoypadButton.START);
-            key_map.Add(SDL.SDL_Keycode.SDLK_a, Joypad.JoypadButton.BUTTON_A);
-            key_map.Add(SDL.SDL_Keycode.SDLK_s, Joypad.JoypadButton.BUTTON_B);
-
+            // Dictionary<SDL.SDL_Keycode, Joypad.JoypadButton> key_map = mapJoystick();s
 
             bool exit = false;
 
-            Bus.gameloopDel callback = delegate(ref PPU ppu, ref Joypad joypad) {
-                Renderer.render(ref ppu, ref frame);
-
-                SDL.SDL_UpdateTexture(gTexture, IntPtr.Zero, frame_ptr, 256*3);
-
-                SDL.SDL_RenderClear(gRenderer);
-                SDL.SDL_RenderCopy(gRenderer, gTexture, IntPtr.Zero, IntPtr.Zero);
-                SDL.SDL_RenderPresent(gRenderer);
-
-                SDL.SDL_Event e;
-                while( SDL.SDL_PollEvent(out e) != 0) {
-                    if (e.type == SDL.SDL_EventType.SDL_QUIT) {
-                        exit = true;
-                    }
-                    else if (e.type == SDL.SDL_EventType.SDL_KEYDOWN) {
-                        Joypad.JoypadButton key;
-                        if (key_map.TryGetValue(e.key.keysym.sym, out key)) {
-                            joypad.setButtonPressedStatus(key, true);
-                        }
-                    }
-                    else if (e.type == SDL.SDL_EventType.SDL_KEYUP) {
-                        Joypad.JoypadButton key;
-                        if (key_map.TryGetValue(e.key.keysym.sym, out key)) {
-                            joypad.setButtonPressedStatus(key, false);
-                        }
-                    }
-                }
-            };
+            Action exit_gameloop = () => exit = true;
+            // Bus.gameloopDel callback = setupCallback(frame, frame_ptr, key_map, exit_gameloop);
+            Bus.gameloopDel callback = setupCallback(frame, frame_ptr, exit_gameloop);
 
             Bus bus = new Bus(rom, callback);
 
@@ -120,6 +179,72 @@ namespace NESEmu
 
             Marshal.FreeHGlobal(frame_ptr);
             close();
+        }
+
+        static string waitForFile() {
+            string filename = "";
+            while(filename == "") {
+                SDL.SDL_Event e;
+                while( SDL.SDL_PollEvent(out e) != 0) {
+                    if (e.type == SDL.SDL_EventType.SDL_QUIT) {
+                        System.Environment.Exit(1);
+                    }
+                    else if (e.type == SDL.SDL_EventType.SDL_DROPFILE) {
+                        filename = SDL.UTF8_ToManaged(e.drop.file, true);
+                    }
+                }
+            }
+
+            return filename;
+        }
+
+        // static Dictionary<SDL.SDL_Keycode, Joypad.JoypadButton> mapJoystick() {
+        //     Dictionary<SDL.SDL_Keycode, Joypad.JoypadButton> key_map = new Dictionary<SDL.SDL_Keycode, Joypad.JoypadButton>();
+        //     key_map.Add(SDL.SDL_Keycode.SDLK_DOWN, Joypad.JoypadButton.DOWN);
+        //     key_map.Add(SDL.SDL_Keycode.SDLK_UP, Joypad.JoypadButton.UP);
+        //     key_map.Add(SDL.SDL_Keycode.SDLK_RIGHT, Joypad.JoypadButton.RIGHT);
+        //     key_map.Add(SDL.SDL_Keycode.SDLK_LEFT, Joypad.JoypadButton.LEFT);
+        //     key_map.Add(SDL.SDL_Keycode.SDLK_SPACE, Joypad.JoypadButton.SELECT);
+        //     key_map.Add(SDL.SDL_Keycode.SDLK_RETURN, Joypad.JoypadButton.START);
+        //     key_map.Add(SDL.SDL_Keycode.SDLK_a, Joypad.JoypadButton.BUTTON_A);
+        //     key_map.Add(SDL.SDL_Keycode.SDLK_s, Joypad.JoypadButton.BUTTON_B);
+        //     return key_map;
+        // }
+
+        // static Bus.gameloopDel setupCallback(Frame frame, IntPtr frame_ptr, Dictionary<SDL.SDL_Keycode, Joypad.JoypadButton> key_map, Action exit) {
+        static Bus.gameloopDel setupCallback(Frame frame, IntPtr frame_ptr, Action exit) {
+            Bus.gameloopDel callback = delegate(ref PPU ppu, ref Joypad joypad) {
+                Renderer.render(ref ppu, ref frame);
+
+                SDL.SDL_UpdateTexture(gTexture, IntPtr.Zero, frame_ptr, 256*3);
+
+                SDL.SDL_RenderClear(gRenderer);
+                SDL.SDL_RenderCopy(gRenderer, gTexture, IntPtr.Zero, IntPtr.Zero);
+                SDL.SDL_RenderPresent(gRenderer);
+
+                SDL.SDL_Event e;
+                while( SDL.SDL_PollEvent(out e) != 0) {
+                    if (e.type == SDL.SDL_EventType.SDL_QUIT) {
+                        exit();
+                    }
+                    else if (e.type == SDL.SDL_EventType.SDL_KEYDOWN) {
+                        joypad.keyUp(e.key.keysym.sym);
+                        // Joypad.JoypadButton key;
+                        // if (key_map.TryGetValue(e.key.keysym.sym, out key)) {
+                        //     joypad.setButtonPressedStatus(key, true);
+                        // }
+                    }
+                    else if (e.type == SDL.SDL_EventType.SDL_KEYUP) {
+                        joypad.keyDown(e.key.keysym.sym);
+                        // Joypad.JoypadButton key;
+                        // if (key_map.TryGetValue(e.key.keysym.sym, out key)) {
+                        //     joypad.setButtonPressedStatus(key, false);
+                        // }
+                    }
+                }
+            };
+
+            return callback;
         }
 
         static bool initSDL() {

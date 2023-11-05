@@ -1,8 +1,10 @@
+using SDL2;
+
 namespace NESEmu
 {
-    public class Joypad
+    public abstract class Joypad
     {
-        public enum JoypadButton {
+        protected enum JoypadButton {
             RIGHT = (1 << 7),   
             LEFT = (1 << 6),  
             DOWN = (1 << 5),  
@@ -17,6 +19,8 @@ namespace NESEmu
         bool strobe;
         byte button_index;
 
+        public abstract void keyUp(SDL.SDL_Keycode code);
+        public abstract void keyDown(SDL.SDL_Keycode code);
 
         void setFlag(JoypadButton flag, bool v) {
             if (v)
@@ -53,8 +57,42 @@ namespace NESEmu
             return response;
         }
 
-        public void setButtonPressedStatus(JoypadButton button, bool pressed) {
+        protected void setButtonPressedStatus(JoypadButton button, bool pressed) {
             setFlag(button, pressed);
+        }
+    }
+
+    class SDLKeyboard: Joypad {
+        Dictionary<SDL.SDL_Keycode, JoypadButton> key_map;
+
+        public SDLKeyboard() {
+            key_map = new Dictionary<SDL.SDL_Keycode, JoypadButton>
+            {
+                { SDL.SDL_Keycode.SDLK_DOWN, JoypadButton.DOWN },
+                { SDL.SDL_Keycode.SDLK_UP, JoypadButton.UP },
+                { SDL.SDL_Keycode.SDLK_RIGHT, JoypadButton.RIGHT },
+                { SDL.SDL_Keycode.SDLK_LEFT, JoypadButton.LEFT },
+                { SDL.SDL_Keycode.SDLK_SPACE, JoypadButton.SELECT },
+                { SDL.SDL_Keycode.SDLK_RETURN, JoypadButton.START },
+                { SDL.SDL_Keycode.SDLK_a, JoypadButton.BUTTON_A },
+                { SDL.SDL_Keycode.SDLK_s, JoypadButton.BUTTON_B }
+            };
+        }
+
+        public override void keyUp(SDL.SDL_Keycode code)
+        {
+            JoypadButton key;
+            if (key_map.TryGetValue(code, out key)) {
+                setButtonPressedStatus(key, true);
+            }
+        }
+
+        public override void keyDown(SDL.SDL_Keycode code)
+        {
+            JoypadButton key;
+            if (key_map.TryGetValue(code, out key)) {
+                setButtonPressedStatus(key, false);
+            }
         }
     }
 }
