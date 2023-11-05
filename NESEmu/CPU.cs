@@ -94,7 +94,8 @@ namespace NESEmu
             register_a = 0;
             register_x = 0;
             register_y = 0;
-            status = 0x00 | (byte) FLAGS.I;
+            // status = 0x00 | (byte) FLAGS.I;
+            status = (byte) FLAGS.I;
             status = (byte) (status | (byte) FLAGS.U);
             _cycles = 0;
             SP = 0xFD;
@@ -940,7 +941,8 @@ namespace NESEmu
             switch (_instructions[opcode].addressMode) {
                 case var v when v == IMP:
                 {
-                    if (opcode == 0x0a | opcode == 0x4a | opcode == 0x2a | opcode == 0x6a)
+                    // if (opcode == 0x0a | opcode == 0x4a | opcode == 0x2a | opcode == 0x6a)
+                    if (opcode == 0x0a || opcode == 0x4a || opcode == 0x2a || opcode == 0x6a)
                         memory = string.Format("      {0,4} A                         ", _instructions[opcode].name);
                     else
                         memory = string.Format("      {0,4}                           ", _instructions[opcode].name);
@@ -993,7 +995,8 @@ namespace NESEmu
                     int lo = read(_addr); _addr++;
                     int hi = read(_addr); _addr++;
                     byte value = read((ushort)((hi << 8) | lo));
-                    if (opcode != 0x4c & opcode != 0x20)
+                    // if (opcode != 0x4c & opcode != 0x20)
+                    if (opcode != 0x4c && opcode != 0x20)
                         memory = string.Format("{0:X2} {1:X2} {2,4} ${3:X4} = {4,-18:X2}", lo, hi, _instructions[opcode].name, (hi << 8) | lo, value);
                     else
                         memory = string.Format("{0:X2} {1:X2} {2,4} ${3,-25:X4}", lo, hi, _instructions[opcode].name, (hi << 8) | lo);

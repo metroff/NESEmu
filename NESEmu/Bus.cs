@@ -8,7 +8,7 @@
         Rom rom;
         PPU ppu;
 
-        uint _cycles;
+        // uint _cycles;
 
         public delegate void gameloopDel(ref PPU ppu, ref Joypad joypad);
         public gameloopDel gameloop_callback;
@@ -19,7 +19,7 @@
             cpuRam = new byte[2048];
             this.rom = rom;
             ppu = new PPU(rom.chrRom, rom.screenMirroring);
-            _cycles = 0;
+            // _cycles = 0;
             this.gameloop_callback = gameloop_callback;
             // joypad1 = new Joypad();
             joypad1 = new SDLKeyboard();
@@ -238,7 +238,7 @@
         }
 
         public void tick(byte cycles) {
-            _cycles += cycles;
+            // _cycles += cycles;
             
             bool new_frame = ppu.tick((byte)(cycles * 3));
             if (new_frame)

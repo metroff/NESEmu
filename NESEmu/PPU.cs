@@ -143,43 +143,115 @@ namespace NESEmu {
             }
         }
 
+        // Prieš pertvarkymą kognityvinis kompleksiškumas 11
+        // public void writeData(byte value)
+        // {
+        //     ushort address = _addr.get();
+        //     if (address >= 0x0000 && address <= 0x1fff)
+        //     {
+        //         throw new Exception(string.Format("Atempting to write to chr rom space {0:X4}", address));
+        //     }
+        //     else if (address >= 0x2000 && address <= 0x2fff)
+        //     {
+        //         vram[mirrorVramAddress(address)] = value;
+        //     }
+        //     else if (address >= 0x3000 && address <= 0x3eff)
+        //     {
+        //         throw new Exception(string.Format("Unexpected address write, requested = {0:X4}", address));
+        //     }
+        //     else if (address == 0x3f10 || address == 0x3f14 || address == 0x3f18 || address == 0x3f1c)
+        //     {
+        //         ushort mirrored_address = (ushort)(address - 0x10);
+        //         palleteTable[(mirrored_address - 0x3f00)] = value;
+        //     }
+        //     else if (address >= 0x3f00 && address <= 0x3fff)
+        //     {
+        //         palleteTable[(address - 0x3f00)] = value;
+        //     }
+        //     else
+        //     {
+        //         throw new Exception(string.Format("Unexpected mirrored access {0:X4}", address));
+        //     }
+        //     incrementVramAddr();
+        // }
+
+        // Po pertvarkymo kognityvinis kompleksiškumas 4
         public void writeData(byte value) {
             ushort address = _addr.get();
-            if (address >= 0x0000 && address <= 0x1fff) {
-                throw new Exception(string.Format("Atempting to write to chr rom space {0:X4}", address));
-            } else if (address >= 0x2000 && address <= 0x2fff) {
-                vram[mirrorVramAddress(address)] = value;
-            } else if (address >= 0x3000 && address <= 0x3eff) {
-                throw new Exception(string.Format("Unexpected address write, requested = {0:X4}", address));
-            } else if (address == 0x3f10 || address == 0x3f14 || address == 0x3f18 || address == 0x3f1c) {
-                ushort mirrored_address = (ushort)(address - 0x10);
-                palleteTable[(mirrored_address - 0x3f00)] = value;
-            } else if (address >= 0x3f00 && address <= 0x3fff) {
-                palleteTable[(address - 0x3f00)] = value;
-            } else {
-                throw new Exception(string.Format("Unexpected mirrored access {0:X4}", address));
+            switch (address)
+            {
+                case >= 0x0000 and <= 0x1fff:
+                    throw new Exception(string.Format("Atempting to write to chr rom space {0:X4}", address));
+                case >= 0x2000 and <= 0x2fff:
+                    vram[mirrorVramAddress(address)] = value;
+                    break;
+                case >= 0x3000 and <= 0x3eff:
+                    throw new Exception(string.Format("Unexpected address write, requested = {0:X4}", address));
+                case 0x3f10:
+                case 0x3f14:
+                case 0x3f18:
+                case 0x3f1c:
+                {
+                    ushort mirrored_address = (ushort)(address - 0x10);
+                    palleteTable[(mirrored_address - 0x3f00)] = value;
+                    break;
+                }
+                case >= 0x3f00 and <= 0x3fff:
+                    palleteTable[(address - 0x3f00)] = value;
+                    break;
+                default:
+                    throw new Exception(string.Format("Unexpected mirrored access {0:X4}", address));
             }
             incrementVramAddr();
         }
 
+        // Prieš pertvarkymą kognityvinis kompleksiškumas 9
+        // public byte readData() {
+        //     ushort address = _addr.get();
+        //     incrementVramAddr();
+
+        //     if (address >= 0x0000 && address <= 0x1fff) {
+        //         byte result = _internalDataBuffer;
+        //         _internalDataBuffer = chrRom[address];
+        //         return result;
+        //     } else if (address >= 0x2000 && address <= 0x2fff) {
+        //         byte result = _internalDataBuffer;
+        //         _internalDataBuffer = vram[mirrorVramAddress(address)];
+        //         return result;
+        //     } else if (address >= 0x3000 && address <= 0x3eff) {
+        //         throw new Exception(string.Format("Unexpected address access, requested = {0:X4}", address));
+        //     } else if (address >= 0x3f00 && address <= 0x3fff) {
+        //         return palleteTable[(address - 0x3f00)];
+        //     } else {
+        //         throw new Exception(string.Format("Unexpected mirrored access {0:X4}", address));
+        //     }
+        // }
+
+        // Po pertvarkymo kognityvinis kompleksiškumas 1
         public byte readData() {
             ushort address = _addr.get();
             incrementVramAddr();
 
-            if (address >= 0x0000 && address <= 0x1fff) {
-                byte result = _internalDataBuffer;
-                _internalDataBuffer = chrRom[address];
-                return result;
-            } else if (address >= 0x2000 && address <= 0x2fff) {
-                byte result = _internalDataBuffer;
-                _internalDataBuffer = vram[mirrorVramAddress(address)];
-                return result;
-            } else if (address >= 0x3000 && address <= 0x3eff) {
-                throw new Exception(string.Format("Unexpected address access, requested = {0:X4}", address));
-            } else if (address >= 0x3f00 && address <= 0x3fff) {
-                return palleteTable[(address - 0x3f00)];
-            } else {
-                throw new Exception(string.Format("Unexpected mirrored access {0:X4}", address));
+            switch (address)
+            {
+                case >= 0x0000 and <= 0x1fff:
+                {
+                    byte result = _internalDataBuffer;
+                    _internalDataBuffer = chrRom[address];
+                    return result;
+                }
+                case >= 0x2000 and <= 0x2fff:
+                {
+                    byte result = _internalDataBuffer;
+                    _internalDataBuffer = vram[mirrorVramAddress(address)];
+                    return result;
+                }
+                case >= 0x3000 and <= 0x3eff:
+                    throw new Exception(string.Format("Unexpected address access, requested = {0:X4}", address));
+                case >= 0x3f00 and <= 0x3fff:
+                    return palleteTable[(address - 0x3f00)];
+                default:
+                    throw new Exception(string.Format("Unexpected mirrored access {0:X4}", address));
             }
         }
 
